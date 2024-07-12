@@ -113,4 +113,44 @@ create table tb_estudantes(
 -- 5. Limpeza de valores NULL
 --escreva a sua solução aqui
 
+DO $$
+    DECLARE
+        --1.Declaração do CURSOR
+        cur_delete_null REFCURSOR;
+        v_tupla RECORD;
+
+    BEGIN
+        --2. abertura do cursor
+        OPEN cur_delete_null SCROLL FOR
+            SELECT * FROM tb_estudantes;
+        
+        LOOP
+            --3. recuperação dos dados de interesse
+            FETCH cur_delete_null INTO v_tupla;
+            EXIT WHEN NOT FOUND;
+            IF v_tupla.salario IS NULL
+            OR v_tupla.eduMae IS NULL 
+            OR v_tupla.eduPai IS NULL 
+            OR v_tupla.estudaSo IS NULL
+            OR v_tupla.preparo IS NULL
+            OR v_tupla.aprovado IS NULL THEN
+                RAISE NOTICE '%, %, %, %, %, %', v_tupla.aprovado, v_tupla.eduPai, v_tupla.eduMae,
+                    v_tupla.salario, v_tupla.estudaSo, v_tupla.preparo;
+                DELETE FROM tb_estudantes WHERE
+                    CURRENT OF cur_delete_null;
+            END IF;
+        END LOOP;
+
+        LOOP
+            FETCH BACKWARD FROM cur_delete_null INTO v_tupla;
+            EXIT WHEN NOT FOUND;
+            RAISE NOTICE '%, %, %, %, %, %', v_tupla.aprovado, v_tupla.eduPai, v_tupla.eduMae,
+                    v_tupla.salario, v_tupla.estudaSo, v_tupla.preparo;
+        END LOOP;
+        --4. Fechamento do cursor
+        CLOSE cur_delete_null;
+    END;
+$$
+
+
 -- ----------------------------------------------------------------
