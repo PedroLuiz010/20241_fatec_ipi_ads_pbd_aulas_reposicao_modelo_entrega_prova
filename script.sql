@@ -57,7 +57,6 @@ create table tb_estudantes(
 --         --1.Declaração do CURSOR
 --         cur_aprovado_solo REFCURSOR;
 --         nome_tabela VARCHAR(200) := 'tb_estudantes';
---         --v_tupla RECORD;
 --         contador INT;
 
 --     BEGIN
@@ -73,7 +72,11 @@ create table tb_estudantes(
 --             --3. recuperação dos dados de interesse
 --             FETCH cur_aprovado_solo INTO contador;
 --             EXIT WHEN NOT FOUND;
---             RAISE NOTICE '%', contador;
+--             IF contador <= 0 THEN
+--                 RAISE NOTICE '-1';
+--             ELSE
+--                 RAISE NOTICE '%', contador;
+--             END IF;
 --         END LOOP;
 --         --4. Fechamento do cursor
 --         CLOSE cur_aprovado_solo;
@@ -83,6 +86,7 @@ create table tb_estudantes(
 -- ----------------------------------------------------------------
 -- 4 Salário versus estudos
 --escreva a sua solução aqui
+
 
 
 -- ----------------------------------------------------------------
