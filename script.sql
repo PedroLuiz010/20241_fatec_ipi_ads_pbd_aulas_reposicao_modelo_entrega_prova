@@ -87,7 +87,27 @@ create table tb_estudantes(
 -- 4 Salário versus estudos
 --escreva a sua solução aqui
 
+-- DO $$
+--     DECLARE
+--         --1.Declaração do CURSOR
+--         cur_salario_freq CURSOR FOR
+--         SELECT count(*) FROM tb_estudantes 
+--         WHERE salario = 5 AND preparo = 2;
+--         contador INT;
 
+--     BEGIN
+--         --2. abertura do cursor
+--         OPEN cur_salario_freq;
+--         LOOP
+--             --3. recuperação dos dados de interesse
+--             FETCH cur_salario_freq INTO contador;
+--             EXIT WHEN NOT FOUND;
+--             RAISE NOTICE '%', contador;
+--         END LOOP;
+--         --4. Fechamento do cursor
+--         CLOSE cur_salario_freq;
+--     END;
+-- $$
 
 -- ----------------------------------------------------------------
 -- 5. Limpeza de valores NULL
